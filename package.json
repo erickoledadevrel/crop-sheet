@@ -32,8 +32,5 @@
     "gulp-json-editor": "^2.4.1",
     "gulp-run-command": "0.0.9",
     "gulp-zip": "^4.1.0"
-  },
-  "dependencies": {
-    "gulp-debug": "^4.0.0"
   }
 }
