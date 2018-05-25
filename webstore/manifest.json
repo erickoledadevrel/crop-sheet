@@ -1,0 +1,23 @@
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "container": ["GOOGLE_SPREADSHEET", "DOMAIN_INSTALLABLE"],
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "api_console_project_id": "42816466715",
+  "container_info": {
+    "post_install_tip": "Ready for cropping! Use the menu \"Add-ons > Crop Sheet\" to get started. Click on \"Crop to data\" to remove empty rows and columns, or click \"Crop to selection\" to only keep the cells you have selected.",
+    "container_id": "M4yYkgCAwmQf-LFuBrxvA7JIWwGvsHvN0",
+    "container_version": "7"
+  },
+  "manifest_version": 2,
+  "name": "Crop Sheet",
+  "description": "Provides the ability to quickly remove extra rows and columns from a sheet.",
+  "icons": {
+    "16": "script-icon_16.png",
+    "128": "script-icon_128.png"
+  },
+  "version": "8"
+}

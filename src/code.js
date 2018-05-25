@@ -1,8 +1,12 @@
 /**
- * Crop Sheet add-on for Google Sheets. Allows users to remove excess rows and columns
- * from their spreadsheet based on the current selection or the cells that have data.
+ * Crop Sheet add-on for Google Sheets. Allows users to remove excess rows and
+ * columns from their spreadsheet based on the current selection or the cells
+ * that have data.
  * @OnlyCurrentDoc
  */
+
+// ESLint config.
+/* exported onOpen, onInstall, cropToSelection, cropToData */
 
 /**
  * Adds a menu when the spreadsheet is opened.
@@ -25,6 +29,7 @@ function onInstall() {
  * Crops the current sheet to the user's selection.
  */
 function cropToSelection() {
+  console.log('Cropping to selection');
   var range = SpreadsheetApp.getActiveSheet().getActiveRange();
   cropToRange(range);
 }
@@ -33,6 +38,7 @@ function cropToSelection() {
  * Crops the current sheet to the data.
  */
 function cropToData() {
+  console.log('Cropping to data');
   var range = SpreadsheetApp.getActiveSheet().getDataRange();
   cropToRange(range);
 }
@@ -50,7 +56,7 @@ function cropToRange(range) {
   var lastColumn = firstColumn + range.getNumColumns() - 1;
   var maxRows = sheet.getMaxRows();
   var maxColumns = sheet.getMaxColumns();
-  
+
   if (lastRow < maxRows) {
     sheet.deleteRows(lastRow + 1, maxRows - lastRow);
   }
@@ -69,11 +75,13 @@ function cropToRange(range) {
 
 /**
  * Shows a message to the user when the cropping is complete.
- * @param {SpreadsheetApp.Spreadsheet} spreadsheet The spreadsheet to show the message on.
+ * @param {SpreadsheetApp.Spreadsheet} spreadsheet The spreadsheet to show the
+ *     message on.
  */
 function showCompleteMessage(spreadsheet) {
   var title = 'Crop Sheet';
-  var message = HtmlService.createHtmlOutputFromFile('CompleteMessage').getContent();
+  var message = HtmlService.createHtmlOutputFromFile('complete_message')
+      .getContent();
   var timeoutSeconds = 8;
   spreadsheet.toast(message, title, timeoutSeconds);
 }
