@@ -15,7 +15,7 @@ const CWS_ID = 'aojcceglbipehndciapjedoomockgagl';
  * Checks the code for style errors.
  */
 gulp.task('lint', () => {
-  return gulp.src(['src/**/*.js', 'gulpfile.js', '!node_modules/**'])
+  return gulp.src(['src/**/*.js', 'gulpfile.js'])
       .pipe(eslint({
         baseConfig: require('./.eslintrc.js')
       }))
@@ -32,7 +32,7 @@ gulp.task('latest', () => {
   exec('clasp versions', (err, out) => {
     if (err) return console.error(err);
     const line = out.trim().split('\n').pop();
-    const version = line.split(' ').shift();
+    const version = line.split(' ')[0];
 
     // Update the manifest.
     gulp.src('webstore/manifest.json')
@@ -71,24 +71,24 @@ gulp.task('compress', ['bump'], (cb) => {
  * Uploads the CRX zip file to the Chrome Web Store
  */
 gulp.task('upload', ['compress'], (cb) => {
-  var webStore = getWebStore();
   const crx = fs.createReadStream('./build/crx.zip');
-  webStore.uploadExisting(crx).then((res) => {
+  getWebStore().uploadExisting(crx).then((res) => {
+    if (res.uploadState === 'FAILURE') {
+      const error = res.itemError[0].error_detail;
+      return cb(error);
+    }
     console.log('Draft uploaded to Chrome Web Store.');
     cb();
-  }).catch((e) => {
-    console.error(e);
-  });
+  }).catch(cb);
 });
 
 /**
  * Publishes the draft Chrome Web Store listing.
  */
-gulp.task('publish', ['upload'], () => {
-  var webStore = getWebStore();
-  webStore.publish().then((res) => {
+gulp.task('publish', ['upload'], (cb) => {
+  getWebStore().publish().then((res) => {
     console.log('Chrome Web Store draft published.');
-  });
+  }).catch(cb);
 });
 
 /**
@@ -96,11 +96,11 @@ gulp.task('publish', ['upload'], () => {
  * when first setting up the project.
  */
 gulp.task('authorize', () => {
-  const credentials = require('./credentials/client_secret.json');
+  const credentials = require('./credentials/client_secret.json').installed;
   const oAuth2Client = new google.auth.OAuth2(
-      credentials.installed.client_id,
-      credentials.installed.client_secret,
-      credentials.installed.redirect_uris[0]);
+      credentials.client_id,
+      credentials.client_secret,
+      credentials.redirect_uris[0]);
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: ['https://www.googleapis.com/auth/chromewebstore'],
