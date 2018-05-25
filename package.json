@@ -1,0 +1,36 @@
+{
+  "name": "crop-sheet",
+  "version": "1.0.0",
+  "description": "An add-on for Google Sheets that allows you to easily remove extra rows and columns.",
+  "main": "Code.js",
+  "scripts": {
+    "deploy": "clasp push && clasp version && gulp latest && gulp publish",
+    "lint": "gulp lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erickoledadevrel/crop-sheet.git"
+  },
+  "keywords": [
+    "apps-script",
+    "add-on",
+    "sheets"
+  ],
+  "author": "Eric Koleda <ekoleda+devrel@googlers.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/erickoledadevrel/crop-sheet/issues"
+  },
+  "homepage": "https://github.com/erickoledadevrel/crop-sheet",
+  "devDependencies": {
+    "@google/clasp": "^1.3.0",
+    "chrome-webstore-upload": "^0.2.2",
+    "eslint-config-google": "^0.9.1",
+    "googleapis": "^31.0.2",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.2",
+    "gulp-json-editor": "^2.4.1",
+    "gulp-run-command": "0.0.9",
+    "gulp-zip": "^4.1.0"
+  }
+}
