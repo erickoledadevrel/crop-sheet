@@ -70,18 +70,4 @@ function cropToRange(range) {
     sheet.deleteColumns(1, firstColumn - 1);
   }
   sheet.getRange(1, 1, sheet.getMaxRows(), sheet.getMaxColumns()).activate();
-  showCompleteMessage(spreadsheet);
-}
-
-/**
- * Shows a message to the user when the cropping is complete.
- * @param {SpreadsheetApp.Spreadsheet} spreadsheet The spreadsheet to show the
- *     message on.
- */
-function showCompleteMessage(spreadsheet) {
-  var title = 'Crop Sheet';
-  var message = HtmlService.createHtmlOutputFromFile('complete_message')
-      .getContent();
-  var timeoutSeconds = 8;
-  spreadsheet.toast(message, title, timeoutSeconds);
 }
